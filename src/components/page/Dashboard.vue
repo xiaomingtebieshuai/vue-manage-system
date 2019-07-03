@@ -1,248 +1,332 @@
 <template>
-    <div>
-        <el-row :gutter="20">
-            <el-col :span="8">
-                <el-row>
-                    <el-col>
-                        <el-card shadow="hover" class="mgb20">
-                            <div class="user-info">
-                                <img src="static/img/img.jpg" class="user-avator" alt="">
-                                <div class="user-info-cont">
-                                    <div class="user-info-name">{{name}}</div>
-                                    <div>{{role}}</div>
-                                </div>
-                            </div>
-                            <div class="user-info-list">上次登录时间：<span>2018-01-01</span></div>
-                            <div class="user-info-list">上次登录地点：<span>东莞</span></div>
-                        </el-card>
-                        <el-card shadow="hover">
-                            <div slot="header" class="clearfix">
-                                <span>语言详情</span>
-                            </div>
-                            Vue
-                            <el-progress :percentage="57.2" color="#42b983"></el-progress>
-                            JavaScript
-                            <el-progress :percentage="29.8" color="#f1e05a"></el-progress>
-                            CSS
-                            <el-progress :percentage="11.9"></el-progress>
-                            HTML
-                            <el-progress :percentage="1.1" color="#f56c6c"></el-progress>
-                        </el-card>
-                    </el-col>
-                </el-row>
-            </el-col>
-            <el-col :span="16">
-                <el-row :gutter="20" class="mgb20">
-                    <el-col :span="8">
-                        <el-card shadow="hover" :body-style="{padding: '0px'}">
-                            <div class="grid-content grid-con-1">
-                                <i class="el-icon-view grid-con-icon"></i>
-                                <div class="grid-cont-right">
-                                    <div class="grid-num">1234</div>
-                                    <div>用户访问量</div>
-                                </div>
-                            </div>
-                        </el-card>
-                    </el-col>
-                    <el-col :span="8">
-                        <el-card shadow="hover" :body-style="{padding: '0px'}">
-                            <div class="grid-content grid-con-2">
-                                <i class="el-icon-message grid-con-icon"></i>
-                                <div class="grid-cont-right">
-                                    <div class="grid-num">321</div>
-                                    <div>系统消息</div>
-                                </div>
-                            </div>
-                        </el-card>
-                    </el-col>
-                    <el-col :span="8">
-                        <el-card shadow="hover" :body-style="{padding: '0px'}">
-                            <div class="grid-content grid-con-3">
-                                <i class="el-icon-goods grid-con-icon"></i>
-                                <div class="grid-cont-right">
-                                    <div class="grid-num">5000</div>
-                                    <div>数量</div>
-                                </div>
-                            </div>
-                        </el-card>
-                    </el-col>
-                </el-row>
-                <el-card shadow="hover" :body-style="{ height: '304px'}">
-                    <div slot="header" class="clearfix">
-                        <span>待办事项</span>
-                        <el-button style="float: right; padding: 3px 0" type="text">添加</el-button>
-                    </div>
-                    <el-table :data="todoList" :show-header="false" height="304" style="width: 100%;font-size:14px;">
-                        <el-table-column width="40">
-                            <template slot-scope="scope">
-                                <el-checkbox v-model="scope.row.status"></el-checkbox>
-                            </template>
-                        </el-table-column>
-                        <el-table-column>
-                            <template slot-scope="scope">
-                                <div class="todo-item" :class="{'todo-item-del': scope.row.status}">{{scope.row.title}}</div>
-                            </template>
-                        </el-table-column>
-                        <el-table-column width="60">
-                            <template slot-scope="scope">
-                                <i class="el-icon-edit"></i>
-                                <i class="el-icon-delete"></i>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                </el-card>
+    <div class="table">
+        <div class="crumbs">
+            <el-breadcrumb separator="/">
+                <el-breadcrumb-item><i class="el-icon-tickets"></i> 关闭通告信息及影响航线列表</el-breadcrumb-item>
+            </el-breadcrumb>
+        </div>
+        <div class="container">
+            <!--<div class="handle-box">-->
+                <!--<el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>-->
+                <!--<el-select v-model="select_cate" placeholder="筛选省份" class="handle-select mr10">-->
+                    <!--<el-option key="1" label="广东省" value="广东省"></el-option>-->
+                    <!--<el-option key="2" label="湖南省" value="湖南省"></el-option>-->
+                <!--</el-select>-->
+                <!--<el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>-->
+                <!--<el-button type="primary" icon="search" @click="search">搜索</el-button>-->
+            <!--</div>-->
 
-            </el-col>
-        </el-row>
+
+            <el-table
+                :data="tableData"
+                style="width: 100%">
+                <el-table-column type="expand">
+                    <template slot-scope="props">
+                        <el-table
+                            :data="props.row.planePlansList"
+                            style="width: 100%"
+                        >
+                            <el-table-column
+                                prop="airRoute"
+                                label="航班号"
+                                sortable
+                                width="180">
+                            </el-table-column>
+                            <el-table-column
+                                prop="enAirportId"
+                                label="起飞飞机编号"
+                                sortable
+                                width="180">
+                            </el-table-column>
+                            <el-table-column
+                                prop="stAirportName"
+                                label="起飞机场名称"
+                                >
+                            </el-table-column>
+                            <el-table-column
+                                prop="startAt"
+                                label="计划起飞时间"
+                            >
+                            </el-table-column>
+                            <el-table-column
+                                prop="enAirportId"
+                                label="降落机场编号"
+                            >
+                            </el-table-column>
+
+                            <el-table-column
+                                prop="enAirportName"
+                                label="降落机场名称"
+                            >
+                            </el-table-column>
+                            <el-table-column
+                                prop="endAt"
+                                label="计划落地时间"
+                            >
+                            </el-table-column>
+                            <el-table-column
+                                prop="airRoute"
+                                label="航路"
+                            >
+                            </el-table-column>
+                        </el-table>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="planeNotice.announceId" label="通告编号" width="80">
+                </el-table-column>
+                <el-table-column prop="planeNotice.airportId" label="机场编码" width="120">
+                </el-table-column>
+                <el-table-column prop="planeNotice.airportName" label="机场名称" width="120">
+                </el-table-column>
+                <el-table-column prop="planeNotice.startAt" label="生效时间" sortable width="100">
+                </el-table-column>
+                <el-table-column prop="planeNotice.endAt" label="失效时间" sortable width="100">
+                </el-table-column>
+
+                <el-table-column prop="planeNotice.isClose" label="关闭状态" width="80">
+                </el-table-column>
+                <el-table-column prop="planeNotice.content" label="具体内容" >
+                </el-table-column>
+                <el-table-column label="操作" >
+                    <template slot-scope="scope">
+                        <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                        <el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <div class="pagination">
+                <el-pagination @current-change="handleCurrentChange" layout="prev, pager, next" :total="1000">
+                </el-pagination>
+            </div>
+        </div>
+
+        <!-- 编辑弹出框 -->
+        <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
+            <el-form ref="form" :model="form" label-width="50px">
+                <el-form-item label="日期">
+                    <el-date-picker type="date" placeholder="选择日期" v-model="form.date" value-format="yyyy-MM-dd" style="width: 100%;"></el-date-picker>
+                </el-form-item>
+                <el-form-item label="姓名">
+                    <el-input v-model="form.name"></el-input>
+                </el-form-item>
+                <el-form-item label="地址">
+                    <el-input v-model="form.address"></el-input>
+                </el-form-item>
+
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="editVisible = false">取 消</el-button>
+                <el-button type="primary" @click="saveEdit">确 定</el-button>
+            </span>
+        </el-dialog>
+
+        <!-- 删除提示框 -->
+        <el-dialog title="提示" :visible.sync="delVisible" width="300px" center>
+            <div class="del-dialog-cnt">删除不可恢复，是否确定删除？</div>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="delVisible = false">取 消</el-button>
+                <el-button type="primary" @click="deleteRow">确 定</el-button>
+            </span>
+        </el-dialog>
     </div>
 </template>
 
 <script>
     export default {
-        name: 'dashboard',
+        name: 'basetable',
         data() {
             return {
-                name: localStorage.getItem('ms_username'),
-                todoList: [
+                url: './static/vuetable.json',
+                tableData: [
                     {
-                        title: '今天要修复100个bug',
-                        status: false,
+                        planeNotice: {
+                            announceId: "C100",
+                            isForbid: "string",
+                            airRoute:'C100',
+                            airportId:'yinchuan',
+                            airportName:'银川',
+                            startAt:'2003-11-26',
+                            endAt:'2003-11-26',
+                            isClose:'关闭',
+                            content:'因施工'
+                        },
+                        planePlansList: [
+                            {
+                                airRoute: "SB124",
+                                enAirportId: 'YLLH',
+                                enAirportName: "长春",
+                                endAt: "08:00:00",
+                                flightNum: "SB124",
+                                stAirportId: "yinchuan",
+                                stAirportName: "银川",
+                                startAt: "05:00:00"
+                            }
+                        ]
                     },
+
                     {
-                        title: '今天要修复100个bug',
-                        status: false,
+                        planeNotice: {
+                            announceId: "C101",
+                            isForbid: "string",
+                            airRoute:'C100',
+                            airportId:'yinchuan',
+                            airportName:'银川',
+                            startAt:'2003-11-26',
+                            endAt:'2003-11-26',
+                            isClose:'关闭',
+                            content:'道路修正'
+                        },
+                        planePlansList: [
+                            {
+                                airRoute: "SB124",
+                                enAirportId: 'YLLH',
+                                enAirportName: "长春",
+                                endAt: "08:00:00",
+                                flightNum: "SB124",
+                                stAirportId: "yinchuan",
+                                stAirportName: "银川",
+                                startAt: "05:00:00"
+                            }
+                        ]
                     },
+
                     {
-                        title: '今天要写100行代码加几个bug吧',
-                        status: false,
-                    }, {
-                        title: '今天要修复100个bug',
-                        status: false,
+                        planeNotice: {
+                            announceId: "C102",
+                            isForbid: "string",
+                            airRoute:'C100',
+                            airportId:'changchun',
+                            airportName:'长春',
+                            startAt:'2003-11-26',
+                            endAt:'2003-11-26',
+                            isClose:'关闭',
+                            content:'大雨'
+                        },
+                        planePlansList: [
+                            {
+                                airRoute: "SB124",
+                                enAirportId: 'yinchuan',
+                                enAirportName: "银川",
+                                endAt: "08:00:00",
+                                flightNum: "SB124",
+                                stAirportId: "changchun",
+                                stAirportName: "长春",
+                                startAt: "05:00:00"
+                            }
+                        ]
                     },
-                    {
-                        title: '今天要修复100个bug',
-                        status: true,
-                    },
-                    {
-                        title: '今天要写100行代码加几个bug吧',
-                        status: true,
-                    }
-                ]
+
+                ],
+                cur_page: 1,
+                multipleSelection: [],
+                select_cate: '',
+                select_word: '',
+                del_list: [],
+                is_search: false,
+                editVisible: false,
+                delVisible: false,
+                form: {
+                    name: '',
+                    date: '',
+                    address: ''
+                },
+                idx: -1
             }
         },
+        created() {
+            this.getData();
+        },
         computed: {
-            role() {
-                return this.name === 'admin' ? '超级管理员' : '普通用户';
+            data() {
+
+            }
+        },
+        methods: {
+            // 分页导航
+            handleCurrentChange(val) {
+                this.cur_page = val;
+                this.getData();
+            },
+            // 获取 easy-mock 的模拟数据
+            getData() {
+                // 开发环境使用 easy-mock 数据，正式环境使用 json 文件
+                // if (process.env.NODE_ENV === 'development') {
+                //     this.url = '/ms/table/list';
+                // };
+                // this.$axios.post(this.url, {
+                //     page: this.cur_page
+                // }).then((res) => {
+                //     this.tableData = res.data.list;
+                // })
+            },
+            search() {
+                this.is_search = true;
+            },
+            formatter(row, column) {
+                return row.address;
+            },
+            filterTag(value, row) {
+                return row.tag === value;
+            },
+            handleEdit(index, row) {
+                this.idx = index;
+                const item = this.tableData[index];
+                this.form = {
+                    name: item.name,
+                    date: item.date,
+                    address: item.address
+                }
+                this.editVisible = true;
+            },
+            handleDelete(index, row) {
+                this.idx = index;
+                this.delVisible = true;
+            },
+            delAll() {
+                const length = this.multipleSelection.length;
+                let str = '';
+                this.del_list = this.del_list.concat(this.multipleSelection);
+                for (let i = 0; i < length; i++) {
+                    str += this.multipleSelection[i].name + ' ';
+                }
+                this.$message.error('删除了' + str);
+                this.multipleSelection = [];
+            },
+            handleSelectionChange(val) {
+                this.multipleSelection = val;
+            },
+            // 保存编辑
+            saveEdit() {
+                this.$set(this.tableData, this.idx, this.form);
+                this.editVisible = false;
+                this.$message.success(`修改第 ${this.idx+1} 行成功`);
+            },
+            // 确定删除
+            deleteRow(){
+                this.tableData.splice(this.idx, 1);
+                this.$message.success('删除成功');
+                this.delVisible = false;
             }
         }
     }
 
 </script>
 
-
 <style scoped>
-    .el-row {
+    .handle-box {
         margin-bottom: 20px;
     }
 
-    .grid-content {
-        display: flex;
-        align-items: center;
-        height: 100px;
-    }
-
-    .grid-cont-right {
-        flex: 1;
-        text-align: center;
-        font-size: 12px;
-        color: #999;
-    }
-
-    .grid-num {
-        font-size: 30px;
-        font-weight: bold;
-    }
-
-    .grid-con-icon {
-        font-size: 50px;
-        width: 100px;
-        height: 100px;
-        text-align: center;
-        line-height: 100px;
-        color: #fff;
-    }
-
-    .grid-con-1 .grid-con-icon {
-        background: rgb(45, 140, 240);
-    }
-
-    .grid-con-1 .grid-num {
-        color: rgb(45, 140, 240);
-    }
-
-    .grid-con-2 .grid-con-icon {
-        background: rgb(100, 213, 114);
-    }
-
-    .grid-con-2 .grid-num {
-        color: rgb(45, 140, 240);
-    }
-
-    .grid-con-3 .grid-con-icon {
-        background: rgb(242, 94, 67);
-    }
-
-    .grid-con-3 .grid-num {
-        color: rgb(242, 94, 67);
-    }
-
-    .user-info {
-        display: flex;
-        align-items: center;
-        padding-bottom: 20px;
-        border-bottom: 2px solid #ccc;
-        margin-bottom: 20px;
-    }
-
-    .user-avator {
+    .handle-select {
         width: 120px;
-        height: 120px;
-        border-radius: 50%;
     }
 
-    .user-info-cont {
-        padding-left: 50px;
-        flex: 1;
-        font-size: 14px;
-        color: #999;
+    .handle-input {
+        width: 300px;
+        display: inline-block;
     }
-
-    .user-info-cont div:first-child {
-        font-size: 30px;
-        color: #222;
+    .del-dialog-cnt{
+        font-size: 16px;
+        text-align: center
     }
-
-    .user-info-list {
-        font-size: 14px;
-        color: #999;
-        line-height: 25px;
-    }
-
-    .user-info-list span {
-        margin-left: 70px;
-    }
-
-    .mgb20 {
-        margin-bottom: 20px;
-    }
-
-    .todo-item {
-        font-size: 14px;
-    }
-
-    .todo-item-del {
-        text-decoration: line-through;
-        color: #999;
-    }
-
 </style>

@@ -2,10 +2,21 @@
     <div class="table">
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-tickets"></i> 通告管理</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-tickets"></i> 通告信息列表</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
+            <div class="handle-box">
+            <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">删除公告</el-button>
+                <el-button type="primary" icon="delete" class="handle-del mr10" @click="add">添加公告</el-button>
+
+                <!--<el-select v-model="select_cate" placeholder="筛选省份" class="handle-select mr10">-->
+            <!--<el-option key="1" label="广东省" value="广东省"></el-option>-->
+            <!--<el-option key="2" label="湖南省" value="湖南省"></el-option>-->
+            <!--</el-select>-->
+            <!--<el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>-->
+            <!--<el-button type="primary" icon="search" @click="search">搜索</el-button>-->
+            </div>
             <el-table
                 ref="multipleTable"
                 :data="tableData"
@@ -13,57 +24,62 @@
                 style="width: 100%"
                 @selection-change="handleSelectionChange">
                 <el-table-column
-                    prop="airRoute"
-                    label="航班号"
-                    sortable
-                    width="180">
+                    type="selection"
+                    width="55">
                 </el-table-column>
                 <el-table-column
-                    prop="enAirportId"
-                    label="起飞飞机编号"
-                    sortable
-                    width="180">
+                    prop="announceId"
+                    label="通告编号"
+                    width="80">
                 </el-table-column>
                 <el-table-column
-                    prop="stAirportName"
-                    label="起飞机场名称"
+                    prop="airportId"
+                    label="机场编号"
+                    width="150">
+                </el-table-column>
+                <el-table-column
+                    prop="airportName"
+                    label="机场名称"
+                    width="160"
                 >
                 </el-table-column>
-                <el-table-column
-                    prop="startAt"
-                    label="计划起飞时间"
-                >
+                <el-table-column prop="startAt" label="生效时间" sortable width="160">
                 </el-table-column>
-                <el-table-column
-                    prop="enAirportId"
-                    label="降落机场编号"
-                >
+                <el-table-column prop="endAt" label="失效时间" sortable width="160">
                 </el-table-column>
 
-                <el-table-column
-                    prop="enAirportName"
-                    label="降落机场名称"
-                >
-                </el-table-column>
-                <el-table-column
-                    prop="endAt"
-                    label="计划落地时间"
-                >
-                </el-table-column>
+
+
                 <el-table-column
                     prop="airRoute"
                     label="航路"
                 >
                 </el-table-column>
 
-
-
-                <el-table-column label="操作" >
-                    <template slot-scope="scope">
-                        <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                        <el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-                    </template>
+                <el-table-column
+                    prop="isForbid"
+                    label="限航状态"
+                >
                 </el-table-column>
+
+                <el-table-column
+                    prop="content"
+                    label="内容"
+                >
+                </el-table-column>
+
+                <el-table-column
+                    prop="isClose"
+                    label="关闭状态"
+                >
+                </el-table-column>
+
+                <!--<el-table-column label="操作" >-->
+                    <!--<template slot-scope="scope">-->
+                        <!--<el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>-->
+                        <!--<el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>-->
+                    <!--</template>-->
+                <!--</el-table-column>-->
             </el-table>
             <div class="pagination">
                 <el-pagination @current-change="handleCurrentChange" layout="prev, pager, next" :total="1000">
@@ -72,16 +88,43 @@
         </div>
 
         <!-- 编辑弹出框 -->
-        <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
-            <el-form ref="form" :model="form" label-width="50px">
-                <el-form-item label="日期">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="form.date" value-format="yyyy-MM-dd" style="width: 100%;"></el-date-picker>
+        <el-dialog title="添加通告" :visible.sync="addVisible" width="50%">
+            <el-form :inline="true" :model="formInline" class="demo-form-inline">
+                <el-form-item label="机场编号">
+                    <el-input v-model="formInline.user" placeholder="机场编号"></el-input>
                 </el-form-item>
-                <el-form-item label="姓名">
-                    <el-input v-model="form.name"></el-input>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <el-form-item label="机场名称">
+                    <el-input v-model="formInline.user" placeholder="机场名称"></el-input>
                 </el-form-item>
-                <el-form-item label="地址">
-                    <el-input v-model="form.address"></el-input>
+
+                <el-form-item label="通告编号">
+                    <el-input v-model="formInline.user" placeholder="机场编号"></el-input>
+                </el-form-item>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <el-form-item label="生效时间">
+                    <el-col :span="21">
+                        <el-date-picker type="time" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
+                    </el-col>
+
+                </el-form-item>
+
+                <el-form-item label="航 班">
+                    <el-input v-model="formInline.user" placeholder="机场编号" width="100%"></el-input>
+                </el-form-item>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <el-form-item label="失效时间">
+                    <el-col :span="11">
+                        <el-form-item prop="date1">
+                            <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
+                        </el-form-item>
+                    </el-col>
+                    <el-col class="line" :span="2">-</el-col>
+                    <el-col :span="11">
+                        <el-form-item prop="date2">
+                            <el-time-picker placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
+                        </el-form-item>
+                    </el-col>
                 </el-form-item>
 
             </el-form>
@@ -110,86 +153,38 @@
                 url: './static/vuetable.json',
                 tableData: [
                     {
-                        planeNotice: {
-                            announceId: "C100",
-                            isForbid: "string",
-                            airRoute:'YLLH',
-                            airportId:'yinchuan',
-                            airportName:'银川',
-                            startAt:'2003-11-26',
-                            endAt:'2003-11-26',
-                            isClose:'关闭',
-                            isForbid:'限航',
-                            content:'4000-5000米低压'
-                        },
-                        planePlansList: [
-                            {
-                                airRoute: "SB124",
-                                enAirportId: 'YLLM',
-                                enAirportName: "长春",
-                                endAt: "08:00:00",
-                                flightNum: "SB124",
-                                stAirportId: "yinchuan",
-                                stAirportName: "银川",
-                                startAt: "05:00:00"
-                            }
-                        ]
+                        "airRoute": "YLLH",
+                        "airportId": "yinchuan",
+                        "airportName": "银川",
+                        "announceId": "C100",
+                        "content": "低压",
+                        "endAt": "2019-06-27 19:23:22",
+                        "isClose": "未关闭",
+                        "isForbid": "限航",
+                        "startAt": "2019-06-27 15:23:22"
                     },
-
                     {
-                        planeNotice: {
-                            announceId: "C101",
-                            isForbid: "string",
-                            airRoute:'YLLM',
-                            airportId:'yinchuan',
-                            airportName:'银川',
-                            startAt:'2003-11-26',
-                            endAt:'2003-11-26',
-                            isClose:'关闭',
-                            isForbid:'限航',
-                            content:'热气流'
-                        },
-                        planePlansList: [
-                            {
-                                airRoute: "SB124",
-                                enAirportId: 'YLLH',
-                                enAirportName: "长春",
-                                endAt: "08:00:00",
-                                flightNum: "SB124",
-                                stAirportId: "yinchuan",
-                                stAirportName: "银川",
-                                startAt: "05:00:00"
-                            }
-                        ]
+                        "airRoute": "YLLM",
+                        "airportId": "yinchuan",
+                        "airportName": "银川",
+                        "announceId": "C101",
+                        "content": "因施工",
+                        "endAt": "2019-06-27 19:23:22",
+                        "isClose": "已关闭",
+                        "isForbid": "不限航",
+                        "startAt": "2019-06-27 15:23:22"
                     },
-
                     {
-                        planeNotice: {
-                            announceId: "C102",
-                            isForbid: "string",
-                            airRoute:'YLLM',
-                            airportId:'changchun',
-                            airportName:'长春',
-                            startAt:'2003-11-26',
-                            endAt:'2003-11-26',
-                            isClose:'关闭',
-                            isForbid:'限航',
-                            content:'高压'
-                        },
-                        planePlansList: [
-                            {
-                                airRoute: "YLLH",
-                                enAirportId: 'yinchuan',
-                                enAirportName: "银川",
-                                endAt: "08:00:00",
-                                flightNum: "SB124",
-                                stAirportId: "changchun",
-                                stAirportName: "长春",
-                                startAt: "05:00:00"
-                            }
-                        ]
+                        "airRoute": "YLLZ",
+                        "airportId": "changchun",
+                        "airportName": "长春",
+                        "announceId": "C102",
+                        "content": "高压",
+                        "endAt": "2019-06-27 19:23:22",
+                        "isClose": "未关闭",
+                        "isForbid": "限航",
+                        "startAt": "2019-06-27 15:23:22"
                     },
-
                 ],
                 cur_page: 1,
                 multipleSelection: [],
@@ -197,12 +192,18 @@
                 select_word: '',
                 del_list: [],
                 is_search: false,
-                editVisible: false,
+                addVisible: false,
                 delVisible: false,
                 form: {
                     name: '',
                     date: '',
-                    address: ''
+                    address: '',
+                    date1: '',
+                    date2: '',
+                },
+                formInline: {
+                    user: '',
+                    region: ''
                 },
                 idx: -1
             }
@@ -220,6 +221,10 @@
             handleCurrentChange(val) {
                 this.cur_page = val;
                 this.getData();
+            },
+
+            onSubmit() {
+                console.log('submit!');
             },
             // 获取 easy-mock 的模拟数据
             getData() {
@@ -280,6 +285,9 @@
                 this.tableData.splice(this.idx, 1);
                 this.$message.success('删除成功');
                 this.delVisible = false;
+            },
+            add(){
+                this.addVisible = true;
             }
         }
     }

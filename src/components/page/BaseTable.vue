@@ -72,28 +72,28 @@
                         </el-table>
                     </template>
                 </el-table-column>
-                <el-table-column prop="planeNotice.announceId" label="通告编号" width="80">
+                <el-table-column prop="planeNotice.announceId" label="通告编号" width="100">
                 </el-table-column>
-                <el-table-column prop="planeNotice.airportId" label="机场编码" width="120">
+                <el-table-column prop="planeNotice.airportId" label="机场编码" width="150">
                 </el-table-column>
-                <el-table-column prop="planeNotice.airportName" label="机场名称" width="120">
+                <el-table-column prop="planeNotice.airportName" label="机场名称" width="160">
                 </el-table-column>
-                <el-table-column prop="planeNotice.startAt" label="生效时间" sortable width="100">
+                <el-table-column prop="planeNotice.startAt" label="生效时间" sortable width="120">
                 </el-table-column>
-                <el-table-column prop="planeNotice.endAt" label="失效时间" sortable width="100">
+                <el-table-column prop="planeNotice.endAt" label="失效时间" sortable width="120">
                 </el-table-column>
-                <el-table-column prop="planeNotice.airRoute" label="航路" width="80">
+                <el-table-column prop="planeNotice.airRoute" label="航路" width="100">
                 </el-table-column>
-                <el-table-column prop="planeNotice.isForbid" label="限航状态" width="80">
+                <el-table-column prop="planeNotice.isForbid" label="限航状态" width="100">
                 </el-table-column>
                 <el-table-column prop="planeNotice.content" label="具体内容" >
                 </el-table-column>
-                <el-table-column label="操作" >
-                    <template slot-scope="scope">
-                        <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                        <el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-                    </template>
-                </el-table-column>
+                <!--<el-table-column label="操作" >-->
+                    <!--<template slot-scope="scope">-->
+                        <!--<el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>-->
+                        <!--<el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>-->
+                    <!--</template>-->
+                <!--</el-table-column>-->
             </el-table>
             <div class="pagination">
                 <el-pagination @current-change="handleCurrentChange" layout="prev, pager, next" :total="1000">

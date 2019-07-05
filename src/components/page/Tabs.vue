@@ -93,7 +93,7 @@
                 <el-form-item label="机场编号">
                     <el-input v-model="formInline.user" placeholder="机场编号"></el-input>
                 </el-form-item>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <el-form-item label="机场名称">
                     <el-input v-model="formInline.user" placeholder="机场名称"></el-input>
                 </el-form-item>
@@ -101,35 +101,59 @@
                 <el-form-item label="通告编号">
                     <el-input v-model="formInline.user" placeholder="机场编号"></el-input>
                 </el-form-item>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <el-form-item label="生效时间">
                     <el-col :span="21">
-                        <el-date-picker type="time" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
+                        <el-form-item prop="date1">
+                            <el-date-picker type="datetime" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
+                        </el-form-item>
                     </el-col>
-
-                </el-form-item>
-
-                <el-form-item label="航 班">
+                </el-form-item>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <el-form-item label="航    路 ">
                     <el-input v-model="formInline.user" placeholder="机场编号" width="100%"></el-input>
                 </el-form-item>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <el-form-item label="失效时间">
-                    <el-col :span="11">
+                    <el-col :span="21">
                         <el-form-item prop="date1">
-                            <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
+                            <el-date-picker type="datetime" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
                         </el-form-item>
                     </el-col>
-                    <el-col class="line" :span="2">-</el-col>
-                    <el-col :span="11">
-                        <el-form-item prop="date2">
-                            <el-time-picker placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
-                        </el-form-item>
-                    </el-col>
+
+                </el-form-item>
+
+                <el-form-item label="航路状态">
+                    <template>
+                        <el-radio-group v-model="radio">
+                            <el-radio :label="0">限航</el-radio>
+                            <el-radio :label="1">不限航</el-radio>
+                        </el-radio-group>
+                    </template>
+
+                </el-form-item>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <el-form-item label="关闭状态">
+                    <template>
+                        <el-radio-group v-model="close">
+                            <el-radio :label="0">关闭</el-radio>
+                            <el-radio :label="1">未关闭</el-radio>
+                        </el-radio-group>
+                    </template>
+
+                </el-form-item>
+
+                <el-form-item label="内容"  >
+                    <el-input type="textarea" style="width: 500px" autosize v-model="formInline.content" placeholder="机场编号" width="100%"></el-input>
                 </el-form-item>
 
             </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="editVisible = false">取 消</el-button>
+                <el-button @click="addVisible = false">取 消</el-button>
                 <el-button type="primary" @click="saveEdit">确 定</el-button>
             </span>
         </el-dialog>
@@ -151,6 +175,8 @@
         data() {
             return {
                 url: './static/vuetable.json',
+                radio:0,
+                close:0,
                 tableData: [
                     {
                         "airRoute": "YLLH",
@@ -203,7 +229,8 @@
                 },
                 formInline: {
                     user: '',
-                    region: ''
+                    region: '',
+                    content:'4000-5000米气压过高'
                 },
                 idx: -1
             }

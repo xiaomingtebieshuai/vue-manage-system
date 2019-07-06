@@ -89,17 +89,17 @@
 
         <!-- 编辑弹出框 -->
         <el-dialog title="添加通告" :visible.sync="addVisible" width="50%">
-            <el-form :inline="true" :model="formInline" class="demo-form-inline">
+            <el-form :inline="true" :model="form" class="demo-form-inline">
                 <el-form-item label="机场编号">
-                    <el-input v-model="formInline.user" placeholder="机场编号"></el-input>
+                    <el-input v-model="form.airportId" placeholder="机场编号"></el-input>
                 </el-form-item>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <el-form-item label="机场名称">
-                    <el-input v-model="formInline.user" placeholder="机场名称"></el-input>
+                    <el-input v-model="form.airportName" placeholder="机场名称"></el-input>
                 </el-form-item>
 
                 <el-form-item label="通告编号">
-                    <el-input v-model="formInline.user" placeholder="机场编号"></el-input>
+                    <el-input v-model="form.announceId" placeholder="机场编号"></el-input>
                 </el-form-item>
 
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -111,7 +111,7 @@
                     </el-col>
                 </el-form-item>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <el-form-item label="航    路 ">
-                    <el-input v-model="formInline.user" placeholder="机场编号" width="100%"></el-input>
+                    <el-input v-model="form.airRoute" placeholder="机场编号" width="100%"></el-input>
                 </el-form-item>
 
 
@@ -120,7 +120,7 @@
                 <el-form-item label="失效时间">
                     <el-col :span="21">
                         <el-form-item prop="date1">
-                            <el-date-picker type="datetime" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
+                            <el-date-picker type="datetime" placeholder="选择日期" v-model="form.endAt" style="width: 100%;"></el-date-picker>
                         </el-form-item>
                     </el-col>
 
@@ -128,7 +128,7 @@
 
                 <el-form-item label="航路状态">
                     <template>
-                        <el-radio-group v-model="radio">
+                        <el-radio-group v-model="form.isForbid">
                             <el-radio :label="0">限航</el-radio>
                             <el-radio :label="1">不限航</el-radio>
                         </el-radio-group>
@@ -139,7 +139,7 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <el-form-item label="关闭状态">
                     <template>
-                        <el-radio-group v-model="close">
+                        <el-radio-group v-model="form.isClose">
                             <el-radio :label="0">关闭</el-radio>
                             <el-radio :label="1">未关闭</el-radio>
                         </el-radio-group>
@@ -148,7 +148,7 @@
                 </el-form-item>
 
                 <el-form-item label="内容"  >
-                    <el-input type="textarea" style="width: 500px" autosize v-model="formInline.content" placeholder="机场编号" width="100%"></el-input>
+                    <el-input type="textarea" style="width: 500px" autosize v-model="form.content" placeholder="机场编号" width="100%"></el-input>
                 </el-form-item>
 
             </el-form>
@@ -221,11 +221,15 @@
                 addVisible: false,
                 delVisible: false,
                 form: {
-                    name: '',
-                    date: '',
-                    address: '',
-                    date1: '',
-                    date2: '',
+                    airRoute:'',
+                    endAt: '',
+                    content: '',
+                    airportId:'',
+                    airportName:'',
+                    startAt: '',
+                    isForbid: 0,
+                    isClose:0,
+                    announceId:''
                 },
                 formInline: {
                     user: '',

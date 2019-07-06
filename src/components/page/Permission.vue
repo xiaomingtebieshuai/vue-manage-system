@@ -80,45 +80,45 @@
         <el-dialog title="添加计划" :visible.sync="addVisible" width="73%">
             <el-form :inline="true" :model="formInline" class="demo-form-inline">
                 <el-form-item label="起飞机场编号">
-                    <el-input v-model="formInline.user" placeholder="起飞机场编号"></el-input>
+                    <el-input v-model="formInline.stAirportId" placeholder="起飞机场编号"></el-input>
                 </el-form-item>
                 &nbsp;&nbsp;
                 <el-form-item label="起飞机场名称">
-                    <el-input v-model="formInline.user" placeholder="起飞机场名称"></el-input>
+                    <el-input v-model="formInline.stAirportName" placeholder="起飞机场名称"></el-input>
                 </el-form-item>
 
                 <el-form-item label="起飞时间">
 
                     <el-col :span="21">
-                        <el-time-picker placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
+                        <el-time-picker placeholder="选择时间" v-model="formInline.startAt" style="width: 100%;"></el-time-picker>
                     </el-col>
                 </el-form-item>
 
                 <el-form-item label="降落机场编号">
-                    <el-input v-model="formInline.user" placeholder="降落机场编号"></el-input>
+                    <el-input v-model="formInline.enAirportId" placeholder="降落机场编号"></el-input>
                 </el-form-item>
                 &nbsp;&nbsp;
                 <el-form-item label="降落机场名称">
-                    <el-input v-model="formInline.user" placeholder="降落机场名称"></el-input>
+                    <el-input v-model="formInline.enAirportName" placeholder="降落机场名称"></el-input>
                 </el-form-item>
 
                 <el-form-item label="降落时间">
 
                     <el-col :span="21">
-                        <el-time-picker placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
+                        <el-time-picker placeholder="选择时间" v-model="formInline.endAt" style="width: 100%;"></el-time-picker>
                     </el-col>
                 </el-form-item>
 
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                 <el-form-item label="航    路 ">
-                    <el-input v-model="formInline.user" placeholder="航    路" width="100%"></el-input>
+                    <el-input v-model="formInline.airRoute" placeholder="航    路" width="100%"></el-input>
                 </el-form-item>
 
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                 <el-form-item label="航班号">
-                    <el-input    v-model="formInline.content"
+                    <el-input    v-model="formInline.flightNum"
                               placeholder="航班号" width="100%"></el-input>
                 </el-form-item>
 
@@ -178,17 +178,16 @@
                 is_search: false,
                 addVisible: false,
                 delVisible: false,
-                form: {
-                    name: '',
-                    date: '',
-                    address: '',
-                    date1: '',
-                    date2: '',
-                },
+
                 formInline: {
-                    user: '',
-                    region: '',
-                    content: '4000-5000米气压过高'
+                    stAirportId: '',
+                    stAirportName: '',
+                    startAt: '',
+                    enAirportId:'',
+                    enAirportName:'',
+                    endAt:'',
+                    airRoute:'',
+                    flightNum:''
                 },
                 idx: -1
             }

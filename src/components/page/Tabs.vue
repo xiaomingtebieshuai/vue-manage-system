@@ -25,7 +25,7 @@
                 @selection-change="handleSelectionChange">
                 <el-table-column
                     type="selection"
-                    width="55">
+                    width="33">
                 </el-table-column>
                 <el-table-column
                     prop="announceId"
@@ -35,12 +35,12 @@
                 <el-table-column
                     prop="airportId"
                     label="机场编号"
-                    width="150">
+                    width="130">
                 </el-table-column>
                 <el-table-column
                     prop="airportName"
                     label="机场名称"
-                    width="160"
+                    width="100"
                 >
                 </el-table-column>
                 <el-table-column prop="startAt" label="生效时间" sortable width="160">
@@ -64,6 +64,7 @@
 
                 <el-table-column
                     prop="content"
+                    width="100px"
                     label="内容"
                 >
                 </el-table-column>
@@ -236,7 +237,10 @@
                     region: '',
                     content:'4000-5000米气压过高'
                 },
-                idx: -1
+                idx: -1,
+                pageInfo:{
+                    pageNum:0
+                }
             }
         },
         created() {
@@ -250,7 +254,7 @@
         methods: {
             // 分页导航
             handleCurrentChange(val) {
-                this.cur_page = val;
+                this.pageInfo.pageNum = val-1;
                 this.getData();
             },
 
@@ -259,15 +263,10 @@
             },
             // 获取 easy-mock 的模拟数据
             getData() {
-                // 开发环境使用 easy-mock 数据，正式环境使用 json 文件
-                // if (process.env.NODE_ENV === 'development') {
-                //     this.url = '/ms/table/list';
-                // };
-                // this.$axios.post(this.url, {
-                //     page: this.cur_page
-                // }).then((res) => {
-                //     this.tableData = res.data.list;
-                // })
+                var pageNum = this.pageInfo.pageNum
+                this.$axios.get('/api/airport/getPlaneNoticeList?pageNum='+pageNum).then((res) => {
+                    this.tableData = res.data.data;
+                })
             },
             search() {
                 this.is_search = true;

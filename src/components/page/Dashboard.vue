@@ -240,7 +240,10 @@
                     date: '',
                     address: ''
                 },
-                idx: -1
+                idx: -1,
+                pageInfo:{
+                    pageNum:0
+                },
             }
         },
         created() {
@@ -254,20 +257,16 @@
         methods: {
             // 分页导航
             handleCurrentChange(val) {
-                this.cur_page = val;
+                this.pageInfo.pageNum = val-1;
                 this.getData();
             },
             // 获取 easy-mock 的模拟数据
             getData() {
-                // 开发环境使用 easy-mock 数据，正式环境使用 json 文件
-                // if (process.env.NODE_ENV === 'development') {
-                //     this.url = '/ms/table/list';
-                // };
-                // this.$axios.post(this.url, {
-                //     page: this.cur_page
-                // }).then((res) => {
-                //     this.tableData = res.data.list;
-                // })
+
+                    var pageNum = this.pageInfo.pageNum
+                    this.$axios.get('/api/airport/getCloseNoticeList?pageNum='+pageNum).then((res) => {
+                        this.tableData = res.data.data;
+                    })
             },
             search() {
                 this.is_search = true;

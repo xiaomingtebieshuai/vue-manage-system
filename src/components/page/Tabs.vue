@@ -107,7 +107,7 @@
                 <el-form-item label="生效时间">
                     <el-col :span="21">
                         <el-form-item prop="date1">
-                            <el-date-picker type="datetime" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
+                            <el-date-picker type="datetime" placeholder="选择日期" v-model="form.startAt" style="width: 100%;"></el-date-picker>
                         </el-form-item>
                     </el-col>
                 </el-form-item>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -292,28 +292,37 @@
                 this.delVisible = true;
             },
             delAll() {
-                const length = this.multipleSelection.length;
-                let str = '';
-                this.del_list = this.del_list.concat(this.multipleSelection);
-                for (let i = 0; i < length; i++) {
-                    str += this.multipleSelection[i].name + ' ';
-                }
-                this.$message.error('删除了' + str);
-                this.multipleSelection = [];
+                this.delVisible = true;
             },
             handleSelectionChange(val) {
                 this.multipleSelection = val;
+                console.log(val)
             },
             // 保存编辑
             saveEdit() {
-                this.$set(this.tableData, this.idx, this.form);
-                this.editVisible = false;
-                this.$message.success(`修改第 ${this.idx+1} 行成功`);
+                this.$axios.post('/api/airport/insertOrUpdateNotice',this.form).then((res) => {
+                    console.log(res)
+                    if (res.data.code == 0){
+                        this.$message.success(res.data.data);
+                        this.getData()
+                    }else {
+                        this.$message.error(res.data.message);
+                    }
+                })
+                this.addVisible=false;
             },
             // 确定删除
             deleteRow(){
-                this.tableData.splice(this.idx, 1);
-                this.$message.success('删除成功');
+                this.$axios.post('/api/airport/deleteNotice',this.multipleSelection).then((res) => {
+                    console.log(res)
+                    if (res.data.code == 0){
+                        this.$message.success(res.data.data);
+                        this.getData()
+                    }else {
+                        this.$message.error(res.data.message);
+                    }
+                })
+
                 this.delVisible = false;
             },
             add(){

@@ -13,7 +13,7 @@
                         <i class="el-icon-rank"></i>
                     </el-tooltip>
                 </div>
-                
+
                 <div class="user-avator"><img src="static/img/img.jpg"></div>
                 <!-- 用户名下拉菜单 -->
                 <el-dropdown class="user-name" trigger="click" @command="handleCommand">

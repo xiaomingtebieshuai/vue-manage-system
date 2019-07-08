@@ -147,28 +147,7 @@
             return {
                 radio: 0,
                 close: 0,
-                tableData: [
-                    {
-                        "airRoute": "YLLH",
-                        "enAirportId": "changchun",
-                        "enAirportName": "长春",
-                        "endAt": "06:00:22",
-                        "flightNum": "SB124",
-                        "stAirportId": "yinchuan",
-                        "stAirportName": "银川",
-                        "startAt": "05:00:22"
-                    },
-                    {
-                        "airRoute": "YLLH",
-                        "enAirportId": "changchun",
-                        "enAirportName": "长春",
-                        "endAt": "09:00:22",
-                        "flightNum": "TGIY",
-                        "stAirportId": "yinchuan",
-                        "stAirportName": "银川",
-                        "startAt": "00:00:22"
-                    }
-                ],
+                tableData: [],
                 cur_page: 1,
                 multipleSelection: [],
                 select_cate: '',

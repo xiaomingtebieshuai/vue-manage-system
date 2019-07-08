@@ -178,41 +178,7 @@
                 url: './static/vuetable.json',
                 radio:0,
                 close:0,
-                tableData: [
-                    {
-                        "airRoute": "YLLH",
-                        "airportId": "yinchuan",
-                        "airportName": "银川",
-                        "announceId": "C100",
-                        "content": "低压",
-                        "endAt": "2019-06-27 19:23:22",
-                        "isClose": "未关闭",
-                        "isForbid": "限航",
-                        "startAt": "2019-06-27 15:23:22"
-                    },
-                    {
-                        "airRoute": "YLLM",
-                        "airportId": "yinchuan",
-                        "airportName": "银川",
-                        "announceId": "C101",
-                        "content": "因施工",
-                        "endAt": "2019-06-27 19:23:22",
-                        "isClose": "已关闭",
-                        "isForbid": "不限航",
-                        "startAt": "2019-06-27 15:23:22"
-                    },
-                    {
-                        "airRoute": "YLLZ",
-                        "airportId": "changchun",
-                        "airportName": "长春",
-                        "announceId": "C102",
-                        "content": "高压",
-                        "endAt": "2019-06-27 19:23:22",
-                        "isClose": "未关闭",
-                        "isForbid": "限航",
-                        "startAt": "2019-06-27 15:23:22"
-                    },
-                ],
+                tableData: [],
                 cur_page: 1,
                 multipleSelection: [],
                 select_cate: '',

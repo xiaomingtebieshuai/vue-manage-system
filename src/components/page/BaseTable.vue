@@ -23,7 +23,7 @@
                 <el-table-column type="expand">
                     <template slot-scope="props">
                         <el-table
-                            :data="props.row.planePlansList"
+                            :data="props.row.planePlansEntityList"
                             style="width: 100%"
                         >
                             <el-table-column
@@ -72,21 +72,21 @@
                         </el-table>
                     </template>
                 </el-table-column>
-                <el-table-column prop="planeNotice.announceId" label="通告编号" width="100">
+                <el-table-column prop="planeNoticeEntity.announceId" label="通告编号" width="100">
                 </el-table-column>
-                <el-table-column prop="planeNotice.airportId" label="机场编码" width="150">
+                <el-table-column prop="planeNoticeEntity.airportId" label="机场编码" width="150">
                 </el-table-column>
-                <el-table-column prop="planeNotice.airportName" label="机场名称" width="160">
+                <el-table-column prop="planeNoticeEntity.airportName" label="机场名称" width="160">
                 </el-table-column>
-                <el-table-column prop="planeNotice.startAt" label="生效时间" sortable width="120">
+                <el-table-column prop="planeNoticeEntity.startAt" label="生效时间" sortable width="120">
                 </el-table-column>
-                <el-table-column prop="planeNotice.endAt" label="失效时间" sortable width="120">
+                <el-table-column prop="planeNoticeEntity.endAt" label="失效时间" sortable width="120">
                 </el-table-column>
-                <el-table-column prop="planeNotice.airRoute" label="航路" width="100">
+                <el-table-column prop="planeNoticeEntity.airRoute" label="航路" width="100">
                 </el-table-column>
-                <el-table-column prop="planeNotice.isForbid" label="限航状态" width="100">
+                <el-table-column prop="planeNoticeEntity.isForbid" label="限航状态" width="100">
                 </el-table-column>
-                <el-table-column prop="planeNotice.content" label="具体内容" >
+                <el-table-column prop="planeNoticeEntity.content" label="具体内容" >
                 </el-table-column>
                 <!--<el-table-column label="操作" >-->
                     <!--<template slot-scope="scope">-->

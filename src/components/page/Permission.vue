@@ -222,31 +222,51 @@
                 this.delVisible = true;
             },
             delAll() {
-                const length = this.multipleSelection.length;
-                let str = '';
-                this.del_list = this.del_list.concat(this.multipleSelection);
-                for (let i = 0; i < length; i++) {
-                    str += this.multipleSelection[i].name + ' ';
+                if(this.multipleSelection.length>0){
+                    this.delVisible = true;
+                }else{
+                    this.$message.success('请选择删除的数据');
                 }
-                this.$message.error('删除了' + str);
-                this.multipleSelection = [];
             },
             handleSelectionChange(val) {
                 this.multipleSelection = val;
             },
             // 保存编辑
             saveEdit() {
-                this.$set(this.tableData, this.idx, this.form);
-                this.editVisible = false;
-                this.$message.success(`修改第 ${this.idx + 1} 行成功`);
+                this.$axios.post('/api/airport/insertOrUpdatePlane',this.formInline).then((res) => {
+                    console.log(res)
+                    if (res.data.code == 0){
+                        this.$message.success(res.data.data);
+                        this.getData()
+                    }else {
+                        this.$message.error(res.data.message);
+                    }
+                })
+                this.addVisible=false;
             },
             // 确定删除
             deleteRow() {
-                this.tableData.splice(this.idx, 1);
-                this.$message.success('删除成功');
+                this.$axios.post('/api/airport/deletePlane',this.multipleSelection).then((res) => {
+                    console.log(res)
+                    if (res.data.code == 0){
+                        this.$message.success(res.data.data);
+                        this.getData()
+                    }else {
+                        this.$message.error(res.data.message);
+                    }
+                })
+                this.multipleSelection=[];
                 this.delVisible = false;
             },
             add() {
+                this.formInline.airRoute='';
+                this.formInline.enAirportId='';
+                this.formInline.enAirportName='';
+                this.formInline.flightNum='';
+                this.formInline.stAirportId='';
+                this.formInline.endAt='';
+                this.formInline.startAt='';
+                this.formInline.stAirportName='';
                 this.addVisible = true;
             }
         }

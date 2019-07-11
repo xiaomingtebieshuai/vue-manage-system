@@ -130,8 +130,8 @@
                 <el-form-item label="航路状态">
                     <template>
                         <el-radio-group v-model="form.isForbid">
-                            <el-radio :label="0">限航</el-radio>
-                            <el-radio :label="1">不限航</el-radio>
+                            <el-radio :label="1">限航</el-radio>
+                            <el-radio :label="0">不限航</el-radio>
                         </el-radio-group>
                     </template>
 
@@ -141,8 +141,8 @@
                 <el-form-item label="关闭状态">
                     <template>
                         <el-radio-group v-model="form.isClose">
-                            <el-radio :label="0">关闭</el-radio>
-                            <el-radio :label="1">未关闭</el-radio>
+                            <el-radio :label="1">关闭</el-radio>
+                            <el-radio :label="0">未关闭</el-radio>
                         </el-radio-group>
                     </template>
 
@@ -194,8 +194,8 @@
                     airportId:'',
                     airportName:'',
                     startAt: '',
-                    isForbid: 0,
-                    isClose:0,
+                    isForbid: 1,
+                    isClose:1,
                     announceId:''
                 },
                 formInline: {
@@ -258,7 +258,13 @@
                 this.delVisible = true;
             },
             delAll() {
-                this.delVisible = true;
+                if(this.multipleSelection.length>0){
+                    this.delVisible = true;
+                }else{
+                    this.$message.success('请选择删除的数据');
+
+                }
+
             },
             handleSelectionChange(val) {
                 this.multipleSelection = val;
@@ -288,10 +294,17 @@
                         this.$message.error(res.data.message);
                     }
                 })
-
+                this.multipleSelection=[];
                 this.delVisible = false;
             },
             add(){
+                this.form.airportId='';
+                this.form.airportName='';
+                this.form.content='';
+                this.form.announceId='';
+                this.form.startAt='';
+                this.form.endAt='';
+                this.form.airRoute='';
                 this.addVisible = true;
             }
         }

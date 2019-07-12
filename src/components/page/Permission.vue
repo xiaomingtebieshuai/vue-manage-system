@@ -233,6 +233,12 @@
             },
             // 保存编辑
             saveEdit() {
+                var d1 = new Date(this.formInline.startAt);
+                var d2 = new Date(this.formInline.endAt);
+
+                this.formInline.startAt=d1.getHours()+':'+d1.getMinutes()+":"+d1.getSeconds();
+                this.formInline.endAt=d2.getHours()+':'+d2.getMinutes()+":"+d2.getSeconds();
+                console.log(this.formInline)
                 this.$axios.post('/api/airport/insertOrUpdatePlane',this.formInline).then((res) => {
                     console.log(res)
                     if (res.data.code == 0){
